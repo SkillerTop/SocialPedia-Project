@@ -6,7 +6,7 @@ import {
 } from "../controllers/users.js";
 import { verifyToken } from "../middleware/auth.js";
 
-const router = express.Router();
+const router = express.Router(); // створення об'єкту маршрутизатора
 
 /* READ */
 router.get("/:id", verifyToken, getUser);
