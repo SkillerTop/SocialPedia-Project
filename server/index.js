@@ -3,10 +3,12 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
-import multer from "multer";
 import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
+import multer from "multer";
+import multerS3 from "multer-s3";
+import AWS from "aws-sdk";
 import { fileURLToPath } from "url";
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/users.js";
@@ -29,19 +31,27 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
-/* FILE STORAGE */
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "public/assets"); // встановлення каталогу для зберігання файлів
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  },
+// S3 config
+const s3 = new AWS.S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION,
 });
-const upload = multer({ storage });
+
+// S3-multer config
+const upload = (bucket_name) => multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: bucket_name,
+    key: function(req, file, cb) {
+      const newFileName = Date.now() + "-" + file.originalname;
+      cb(null, newFileName);
+    }
+  })
+});
 
 /* ROUTES WITH FILES */
-app.post("/auth/register", upload.single("picture"), register);
+app.post("/auth/register", upload(process.env.AWS_BUCKET_NAME).single("picture"), register);
 
 /* ROUTES */
 app.use("/auth", authRoutes);

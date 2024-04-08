@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "dependencies": {
+    "aws-sdk": "^2.1594.0",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
@@ -16,7 +17,9 @@
     "mongoose": "^6.12.6",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
-    "multer-gridfs-storage": "^5.0.2"
+    "multer-gridfs-storage": "^5.0.2",
+    "multer-s3": "^2.10.0",
+    "uuid": "^9.0.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
