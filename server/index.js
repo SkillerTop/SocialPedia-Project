@@ -55,7 +55,7 @@ const upload = (bucket_name) => multer({
 
 /* ROUTES WITH FILES */
 app.post("/auth/register", upload(process.env.AWS_BUCKET_NAME).single("picture"), register);
-app.post("/posts", verifyToken, upload(process.env.AWS_BUCKET_NAME).single("picture"), createPost);
+app.post("/posts", upload(process.env.AWS_BUCKET_NAME).single("picture"), createPost);
 
 /* ROUTES */
 app.use("/auth", authRoutes);
