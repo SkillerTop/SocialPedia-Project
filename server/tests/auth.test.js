@@ -14,5 +14,9 @@ describe('Authentication API Tests', () => {
     expect(res.body).to.have.property('token'); // Очікуємо, що відповідь містить токен
     token = res.body.token; // Зберігаємо токен для подальших тестів
   });
+
+  afterEach(async () => {
+    await app.close(); // Закриваємо сервер
+  });
 });
 
