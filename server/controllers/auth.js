@@ -12,7 +12,7 @@ export const register = async (req, res) => {
       password,
       picturePath,
       friends,
-      location,
+      userLocation,
       occupation,
     } = req.body; // отримання даних користувача з тіла запиту
 
@@ -26,7 +26,7 @@ export const register = async (req, res) => {
       password: passwordHash,
       picturePath: req.file.location,
       friends,
-      location,
+      userLocation,
       occupation,
       viewedProfile: Math.floor(Math.random() * 10000),
       impressions: Math.floor(Math.random() * 10000),

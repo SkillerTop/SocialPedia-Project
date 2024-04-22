@@ -27,19 +27,20 @@ const UserSchema = new mongoose.Schema(
     },
     picturePath: {
       type: String,
-      default: "", // значення за замовчуванням для поля picturePath
+      default: "", 
     },
     friends: {
       type: Array,
-      default: [], // значення за замовчуванням для поля friends
+      default: [], 
     },
-    location: String,
+    userLocation: String,
     occupation: String,
     viewedProfile: Number,
     impressions: Number,
   },
-  { timestamps: true } // включення автоматичного створення полів timestamps: createdAt та updatedAt
+  { timestamps: true }
 );
 
-const User = mongoose.model("User", UserSchema); // створення моделі користувача зі схемою
+const User = mongoose.model("User", UserSchema); // Створення моделі користувача зі схемою
+
 export default User;
