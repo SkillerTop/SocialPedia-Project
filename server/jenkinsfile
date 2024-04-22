@@ -22,9 +22,6 @@ pipeline {
     }
     
     post {
-        always {
-            // Clean up steps if needed
-        }
         success {
             echo 'Tests passed successfully!'
         }
