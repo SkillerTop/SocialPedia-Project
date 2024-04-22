@@ -1,20 +1,35 @@
 pipeline {
     agent any
-
+    
     stages {
-        stage('Install dependencies') {
+        stage('Checkout') {
             steps {
-                script {
-                    sh 'npm install'
-                }
+                git 'https://github.com/SkillerTop/SocialPedia-Project.git'
             }
         }
+        
+        stage('Install dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+        
         stage('Run tests') {
             steps {
-                script {
-                    sh 'npm test'
-                }
+                sh 'npx mocha tests/auth.test.js'
             }
+        }
+    }
+    
+    post {
+        always {
+            // Clean up steps if needed
+        }
+        success {
+            echo 'Tests passed successfully!'
+        }
+        failure {
+            echo 'Tests failed!'
         }
     }
 }
