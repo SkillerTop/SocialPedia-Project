@@ -15,7 +15,7 @@ describe('Authentication API Tests', () => {
     token = res.body.token; // Зберігаємо токен для подальших тестів
   });
 
-  afterEach(async () => {
+  after(async () => {
     await app.close(); // Закриваємо сервер
   });
 });
