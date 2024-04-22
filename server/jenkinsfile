@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/SkillerTop/SocialPedia-Project.git'
+            }
+        }
+        
+        stage('Install dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+        
+        stage('Run tests') {
+            steps {
+                sh 'npx mocha tests/auth.test.js'
+            }
+        }
+    }
+    
+    post {
+        success {
+            echo 'Tests passed successfully!'
+        }
+        failure {
+            echo 'Tests failed!'
+        }
+    }
+}
