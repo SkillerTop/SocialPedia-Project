@@ -64,13 +64,15 @@ app.use("/posts", postRoutes);
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;
+let server;
+
 mongoose
   .connect(process.env.MONGO_URL, { // з'єднання з базою даних MongoDB
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
   .then(() => {
-    app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+    server = app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
 
     /* ADD DATA ONE TIME */
     // User.insertMany(users); // додавання початкових даних користувачів (може бути використано для тестування)
@@ -78,4 +80,5 @@ mongoose
   })
   .catch((error) => console.log(`${error} did not connect`));
 
-  export default app;
+// Експортуємо сервер для тестування
+export default server;
